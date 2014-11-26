@@ -27,6 +27,6 @@ module Noteshred
   end
 
   def self.bundle
-    Noteshred::Api.get('/bundle')
+    Noteshred::API.get('/bundle')
   end
 end

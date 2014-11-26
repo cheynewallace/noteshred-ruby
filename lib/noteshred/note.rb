@@ -4,6 +4,7 @@ module Noteshred
                   :title,
                   :password,
                   :password_hash,
+                  :recipients,
                   :encrypted_content,
                   :encrypted_content_salt,
                   :encrypted_content_iv,
@@ -12,21 +13,25 @@ module Noteshred
                   :hint
 
     # Shred Methods
-    AFTER_READING = 1
-    LATER_DATE    = 2
+    SHRED_AFTER_READING = 1
+    SHRED_LATER         = 2
 
     def create
-      if self.shred_method.nil?
-        self.shred_method = AFTER_READING
-      end
-
       # For creating notes that are encrypted on the server
-      Noteshred::Api.post('/notes', self.hashify)
+      validate_content
+      validate_options
+
+      Noteshred::API.post('/notes', Noteshred::Tools.hashify(self))
     end
 
     def push
       # For creating notes that are encrypted by the gem first then pushed to the server
-      Noteshred::Api.post('/notes/push', self.hashify)
+      validate_options
+      if self.encrypted_content_salt.nil? || encrypted_content_iv.nil?
+        raise ArgumentError.new('No encrypted content found. Must call .encrypt before pushing')
+      end
+
+      Noteshred::API.post('/notes/push', Noteshred::Tools.hashify(self))
     end
 
     def encrypt
@@ -40,12 +45,6 @@ module Noteshred
       self
     end
 
-    def hashify
-      self.instance_variables.each_with_object({}) { |var, hsh|
-        hsh[var.to_s.delete("@")] = self.instance_variable_get(var)
-      }
-    end
-
     private
 
     def validate_content
@@ -55,9 +54,14 @@ module Noteshred
     end
 
     def validate_options
-      raise ArgumentError.new('Missing Password') if password.nil?
-      raise ArgumentError.new('Password Must Be Minimum 8 Characters') if password.size < 8
-      raise ArgumentError.new('Missing Content') if content.nil?
+      raise ArgumentError.new('shred_by date not set') if shred_method == SHRED_LATER && shred_by.nil?
+      if !recipients.nil?
+        raise ArgumentError.new('recipients must be an array.') unless recipients.kind_of?(Array)
+      end
+
+      if self.shred_method.nil?
+        self.shred_method = SHRED_AFTER_READING
+      end
     end
   end
 end

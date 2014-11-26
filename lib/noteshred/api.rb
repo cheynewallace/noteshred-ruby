@@ -2,19 +2,19 @@ require 'rest-client'
 require 'json'
 
 module Noteshred
-  module Api
+  module API
     RestClient.add_before_execution_proc do |req, params|
       raise ArgumentError.new('Missing NoteShred API Key') if Noteshred.api_key.nil?
     end
 
     def self.get(rel,params = nil)
       response = RestClient.get(Noteshred.url(rel), {:params => params, :authorization => "Token token=#{Noteshred.api_key}"}){|response, request, result| response }
-      Noteshred::Api.render(response)
+      Noteshred::API.render(response)
     end
 
     def self.post(rel,params = nil)
       response = RestClient.post(Noteshred.url(rel), params, {:authorization => "Token token=#{Noteshred.api_key}", :content_type => :json, :accept => :json}){|response, request, result| response }
-      Noteshred::Api.render(response)
+      Noteshred::API.render(response)
     end
 
     def self.render(response)

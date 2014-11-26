@@ -8,5 +8,11 @@ module Noteshred
     def self.decode_utf8(string)
       Base64.decode64 string.encode('ascii-8bit')
     end
+
+    def self.hashify(obj)
+      obj.instance_variables.each_with_object({}) { |var, hsh|
+        hsh[var.to_s.delete("@")] = obj.instance_variable_get(var)
+      }
+    end
   end
 end
