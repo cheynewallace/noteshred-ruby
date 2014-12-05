@@ -6,7 +6,7 @@ module Noteshred
     end
 
     def self.decode_utf8(string)
-      Base64.decode64 string.encode('ascii-8bit')
+      Base64.decode64(string.encode('ascii-8bit')).force_encoding('utf-8')
     end
 
     def self.hashify(obj)
