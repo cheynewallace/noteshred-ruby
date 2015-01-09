@@ -1,3 +1,4 @@
+require 'bcrypt'
 module Noteshred
   class Note
     attr_accessor :content,
@@ -7,7 +8,7 @@ module Noteshred
                   :recipients,
                   :encrypted_content,
                   :encrypted_content_salt,
-                  :encrypted_content_iv,
+                  :encrypted_content_iv,                  
                   :shred_method,
                   :shred_by,
                   :hint
@@ -40,6 +41,7 @@ module Noteshred
       self.encrypted_content      = crypt[:content]
       self.encrypted_content_iv   = crypt[:iv]
       self.encrypted_content_salt = crypt[:salt]
+      self.password_hash          = BCrypt::Password.create(self.password)
       self.content                = nil
       self.password               = nil
       self

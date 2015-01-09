@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.0', '>= 3.0.0'
 
   spec.add_dependency 'rest-client', '~> 1.7', '>= 1.7.2'
+  spec.add_dependency 'bcrypt', '~> 3.1', '>= 3.1.7'
 end
