@@ -47,10 +47,10 @@ Title, content and password are the minimum options required for a note. This wi
 There are other options which can be set to enable various features.
 
 
-|Option |Type |Description
+|Option |Type |Description|
 |:-----:|----------|
 |hint  |string|Setting a hint will add a message to any notification you sent to users regarding the note which can be used to include information about how to guess the password. The hint is set as a string. [Read More Here](https://www.noteshred.com/blog/password-hints)|
-|recipients|array|The recipients option takes an array of email addresses of which each email address will be emailed with details of how to access the note and the included hint message if set.
+|recipients|array|The recipients option takes an array of email addresses of which each email address will be emailed with details of how to access the note and the included hint message if set.|
 
 ## Pushing Encrypted Notes
 Pushing a note is much like creating a note except that the encryption is performed locally from the gem and the encrypted contents are simply pushed to the server to be stored.
@@ -62,7 +62,8 @@ note.title    = 'Super Secret Note'
 note.content  = 'Hey there, here is the info'
 note.password = 'password098'
 note.encrypt
-#=><Noteshred::Note:0x007fe6a5878c30 @title="Super Secret Note", @content=nil, @password=nil, @encrypted_content="2SM3tjApUErFIqo96pKnliOEGEu16y9NAAovADZeALs=\n", @encrypted_content_iv="UiK2yPbKQ4Lo5M3zagvxHA==\n", @encrypted_content_salt="7388b02e588ef54aa34486d9c79234e8", @version=4, @password_hash="$2a$10$Fvb9Q/5YTyDe6hGH/JQtceC9RB1J9BVqqc0y4K1EDo0Cwqsq1Nd6a">
+
+#=> <Noteshred::Note:0x007fe6a5878c30 @title="Super Secret Note", @content=nil, @password=nil, @encrypted_content="2SM3tjApUErFIqo96pKnliOEGEu16y9NAAovADZeALs=\n", @encrypted_content_iv="UiK2yPbKQ4Lo5M3zagvxHA==\n", @encrypted_content_salt="7388b02e588ef54aa34486d9c79234e8", @version=4, @password_hash="$2a$10$Fvb9Q/5YTyDe6hGH/JQtceC9RB1J9BVqqc0y4K1EDo0Cwqsq1Nd6a">
 
 ```
 
@@ -91,6 +92,7 @@ Multiple recipients can be shared with by using a comma seperated string of emai
 
 ```ruby
 Noteshred::Note.share('7561ab7fbd','someguy@gmail.com','Here is the information you requested')
+#=> {"message"=>"Notification sent", "status"=>"accepted"}
 ```
 
 ## Contributing
