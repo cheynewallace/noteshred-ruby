@@ -20,11 +20,12 @@ module Noteshred
         return {
           :content => Noteshred::Tools.encode_utf8(result),
           :iv      => Noteshred::Tools.encode_utf8(iv),
-          :salt    => salt
+          :salt    => salt,
+          :version => 4
         }
       end
 
-      # Expects UTF-8 encoded strings like the ones from the encrypt method
+      # Expects UTF-8 encoded strings from the encrypt method
       def self.decrypt(content,pass,salt,iv)
         content    = Noteshred::Tools.decode_utf8(content)
         cipher     = OpenSSL::Cipher.new('AES-256-CBC')

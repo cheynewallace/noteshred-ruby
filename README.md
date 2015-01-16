@@ -33,8 +33,8 @@ Notes require a few basic properties as a minimum.
 We will create a note with the bare minimum options.  
 ```ruby
 note = Noteshred::Note.new
-note.title = 'Super Secret Note'
-note.content = 'Hey there, here is the info'
+note.title    = 'Super Secret Note'
+note.content  = 'Hey there, here is the info'
 note.password = 'password098'
 note.create
 
@@ -46,27 +46,52 @@ Title, content and password are the minimum options required for a note. This wi
 
 There are other options which can be set to enable various features.
 
-<table>
-  <tr>
-    <th>Option</th>
-    <th>Type</th>
-    <th>Description</td>
-  </tr>
-  <tr>
-    <td style="text-align: center">hint</td>
-    <td style="text-align: center">sting</td>
-    <td>
-      Setting a hint will add a message to any notification you sent to users regarding the note which can be used to include information about how to guess the password. The hint is set as a string. [Read More Here](https://www.noteshred.com/blog/password-hints)
-    </td>
-  </tr>
-  <tr>
-    <td style="text-align: center">recipients</td>
-    <td style="text-align: center">array</td>
-    <td>
-      The recipients option takes an array of email addresses of which each email address will be emailed with details of how to access the note and the included hint message if set.
-    </td>
-  </tr>
-</table>
+
+|Option |Type |Description
+|:-----:|----------|
+|hint  |string|Setting a hint will add a message to any notification you sent to users regarding the note which can be used to include information about how to guess the password. The hint is set as a string. [Read More Here](https://www.noteshred.com/blog/password-hints)|
+|recipients|array|The recipients option takes an array of email addresses of which each email address will be emailed with details of how to access the note and the included hint message if set.
+
+## Pushing Encrypted Notes
+Pushing a note is much like creating a note except that the encryption is performed locally from the gem and the encrypted contents are simply pushed to the server to be stored.
+This is an additional measure of security for those that are concerned about wire tapping or man in the middle attacks.
+
+```ruby
+note = Noteshred::Note.new
+note.title    = 'Super Secret Note'
+note.content  = 'Hey there, here is the info'
+note.password = 'password098'
+note.encrypt
+#=><Noteshred::Note:0x007fe6a5878c30 @title="Super Secret Note", @content=nil, @password=nil, @encrypted_content="2SM3tjApUErFIqo96pKnliOEGEu16y9NAAovADZeALs=\n", @encrypted_content_iv="UiK2yPbKQ4Lo5M3zagvxHA==\n", @encrypted_content_salt="7388b02e588ef54aa34486d9c79234e8", @version=4, @password_hash="$2a$10$Fvb9Q/5YTyDe6hGH/JQtceC9RB1J9BVqqc0y4K1EDo0Cwqsq1Nd6a">
+
+```
+
+calling **.encrypt** on the note will clear any sensitive content and populate the encrypted content fields with IV and salt.  
+To push the note to the server, simply call push on the note.
+
+```ruby
+note.push
+```
+
+** Please note **
+
+We occationally adjust the encryption algorithms and handling on the server for security reasons and as newer techniques become known. By using the push functionality you will not automatically use the latest encryption as we release it, but instead will be locked into using the most recent version available within this gem.
+
+For example, we are currently at encryption version 4. This is available both on the server and wthin the gem. If we release a version 5, anyone using the standard "note.create" method will automatically use version 5 as we will default everyone to this when creating new notes on the server, where as if you are using the "note.push" method you will still be encrypting notes using version 4 until we release an updated gem.
+
+## Sharing Notes
+Sharing a note with someone will email them with details on how to access the note.
+
+If they have a NoteShred account it will also create a "shared note" which will appear within their user dashboard under the "Shared With Me" section.
+
+To share a note, you need to know the note id (also known as the token) and the persons email address.
+Comments are optional
+
+Multiple recipients can be shared with by using a comma seperated string of email addresses.
+
+```ruby
+Noteshred::Note.share('7561ab7fbd','someguy@gmail.com','Here is the information you requested')
+```
 
 ## Contributing
 
