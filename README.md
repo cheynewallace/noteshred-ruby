@@ -48,7 +48,7 @@ There are other options which can be set to enable various features.
 
 
 |Option |Type |Description|
-|:-----:|----------|
+|-----|----------|
 |hint  |string|Setting a hint will add a message to any notification you sent to users regarding the note which can be used to include information about how to guess the password. The hint is set as a string. [Read More Here](https://www.noteshred.com/blog/password-hints)|
 |recipients|array|The recipients option takes an array of email addresses of which each email address will be emailed with details of how to access the note and the included hint message if set.|
 

@@ -2,15 +2,15 @@ require 'spec_helper'
 describe Noteshred::Note do
   before(:each) do
     Noteshred.api_key = '4ba147490ab85e1c1d0ccb16d746722fe24190f6' #Local
-    @password     = 'password1865#'
-    @content      = 'This is secret information'
-    @title        = 'This is a title'
-    @encrypted    = Noteshred::Crypto::V4.encrypt(@content, @password)
-    @note         = Noteshred::Note.new
-    @note.title   = @title
-    @note.content = @content
-    @note.password = @password
-    #@note.recipients = ['cheyne@frontleft.com', 'cheyne@scriptrock.com']
+    @password         = 'password1865#'
+    @content          = 'This is secret information'
+    @title            = 'This is a title'
+    @encrypted        = Noteshred::Crypto::V4.encrypt(@content, @password)
+    @note             = Noteshred::Note.new
+    @note.title       = @title
+    @note.content     = @content
+    @note.password    = @password
+    @note.recipients  = ['cheyne@somewhere.com']
   end
 
   context 'create' do
