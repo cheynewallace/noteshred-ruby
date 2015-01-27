@@ -73,11 +73,10 @@ To push the note to the server, simply call push on the note.
 note.push
 ```
 
-** Please note **
+###Please note
+We occasionally adjust the encryption algorithms and handling on the server for security reasons and as newer techniques become known. By using the push functionality you will not automatically use the latest encryption as we release it, but instead will be locked into using the most recent version available within this gem.
 
-We occationally adjust the encryption algorithms and handling on the server for security reasons and as newer techniques become known. By using the push functionality you will not automatically use the latest encryption as we release it, but instead will be locked into using the most recent version available within this gem.
-
-For example, we are currently at encryption version 4. This is available both on the server and wthin the gem. If we release a version 5, anyone using the standard "note.create" method will automatically use version 5 as we will default everyone to this when creating new notes on the server, where as if you are using the "note.push" method you will still be encrypting notes using version 4 until we release an updated gem.
+For example, we are currently at encryption version 4. This is available both on the server and within the gem. If we release a version 5, anyone using the standard "note.create" method will automatically use version 5 as we will default everyone to this when creating new notes on the server, where as if you are using the "note.push" method you will still be encrypting notes using version 4 until we release an updated gem.
 
 ## Sharing Notes
 Sharing a note with someone will email them with details on how to access the note.
@@ -87,7 +86,7 @@ If they have a NoteShred account it will also create a "shared note" which will 
 To share a note, you need to know the note id (also known as the token) and the persons email address.
 Comments are optional
 
-Multiple recipients can be shared with by using a comma seperated string of email addresses.
+Multiple recipients can be shared with by using a comma separated string of email addresses.
 
 ```ruby
 Noteshred::Note.share('7561ab7fbd','someguy@gmail.com','Here is the information you requested')
@@ -96,13 +95,13 @@ Noteshred::Note.share('7561ab7fbd','someguy@gmail.com','Here is the information 
 
 ## Requesting Information
 Requests let you receive information from someone without the need for them to have a NoteShred account. Think of it like creating a blank note and asking someone else to fill it in for you.
-This person will be able to open a password protected link and enter some information to be encrypted which is then sent back to you in the form of a regular note, after which you will see appear in your note list and can access using the password you originally defined. [Read More About Requests Here](https://www.noteshred.com/blog/information-request)
+This person will be able to open a password protected link and enter some information to be encrypted which is then sent back to you in the form of a regular note, after which you will see it appear in your note list and can access using the password you originally defined. [Read More About Requests Here](https://www.noteshred.com/blog/information-request)
 
 ```ruby
 request = Noteshred::Request.new
-request.recipient_email  = 'john@company.com'
-request.password         = 'xyzabc123#%'
-request.message = 'Please send me the credentials for server-x'
+request.recipient_email = 'john@company.com'
+request.password        = 'xyzabc123#%'
+request.message         = 'Please send me the credentials for server-x'
 request.create
 ```
 
