@@ -3,6 +3,7 @@ require 'noteshred/api'
 require 'noteshred/crypto'
 require 'noteshred/tools'
 require 'noteshred/note'
+require 'noteshred/request'
 
 module Noteshred
   @api_key  = nil

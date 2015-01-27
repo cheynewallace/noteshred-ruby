@@ -22,7 +22,6 @@ module Noteshred
       # For creating notes that are encrypted on the server
       validate_content
       validate_options
-
       Noteshred::API.post('/notes', Noteshred::Tools.hashify(self))
     end
 

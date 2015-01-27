@@ -2,7 +2,6 @@
 
 Official gem for interacting with the noteshred.com API
 
-**Please note this gem is currently under development, please check back for updates**
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -93,6 +92,18 @@ Multiple recipients can be shared with by using a comma seperated string of emai
 ```ruby
 Noteshred::Note.share('7561ab7fbd','someguy@gmail.com','Here is the information you requested')
 #=> {"message"=>"Notification sent", "status"=>"accepted"}
+```
+
+## Requesting Information
+Requests let you receive information from someone without the need for them to have a NoteShred account. Think of it like creating a blank note and asking someone else to fill it in for you.
+This person will be able to open a password protected link and enter some information to be encrypted which is then sent back to you in the form of a regular note, after which you will see appear in your note list and can access using the password you originally defined. [Read More About Requests Here](https://www.noteshred.com/blog/information-request)
+
+```ruby
+request = Noteshred::Request.new
+request.recipient_email  = 'john@company.com'
+request.password         = 'xyzabc123#%'
+request.message = 'Please send me the credentials for server-x'
+request.create
 ```
 
 ## Contributing

@@ -11,6 +11,7 @@ describe Noteshred::Crypto do
       expect(@encrypted[:iv]).not_to be_empty
       expect(@encrypted[:salt]).not_to be_empty
       expect(@encrypted[:content]).not_to be_empty
+      expect(@encrypted[:content]).not_to eq(@content)
     end
 
     it 'should decrypt successfully' do
