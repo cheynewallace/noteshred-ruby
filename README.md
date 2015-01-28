@@ -31,13 +31,13 @@ Noteshred.api_key = '6935629729ae6869c98799936591'
 Notes require a few basic properties as a minimum.
 We will create a note with the bare minimum options.  
 ```ruby
-note = Noteshred::Note.new
+note          = Noteshred::Note.new
 note.title    = 'Super Secret Note'
 note.content  = 'Hey there, here is the info'
 note.password = 'password098'
 note.create
 
-#=> "{"token":"af3222afb4","title":"Super Secret Note","email":"freddy@fingers.com","email_hash":"1590fee271427e2e4fefe4faf12c835","content":"Hey there, here is the info","shred_by":"2014-12-01T21:33:50-08:00","is_shredded":false,"shred_method":1,"has_attachment":false,"created_at":"2014-11-24T21:33:50-08:00","created_by":"Freddy Fingers","hint":null,"activities":[]}"
+#=> "{"token":"af3222afb4","title":"Super Secret Note","email":"freddy@fingers.com","email_hash":"1590fee271427e2e4fefe4faf12c835","shred_by":"2014-12-01T21:33:50-08:00","is_shredded":false,"shred_method":1,"has_attachment":false,"created_at":"2014-11-24T21:33:50-08:00","created_by":"Freddy Fingers","hint":null,"activities":[]}"
 ```
 
 ### Options
@@ -46,17 +46,24 @@ Title, content and password are the minimum options required for a note. This wi
 There are other options which can be set to enable various features.
 
 
-|Option |Type |Description|
-|-------|-----|-----------|
+|Option   |Type |Description|
+|:-------:|-----|-----------|
 |hint  |string|Setting a hint will add a message to any notification you sent to users regarding the note which can be used to include information about how to guess the password. The hint is set as a string. [Read More Here](https://www.noteshred.com/blog/password-hints)|
 |recipients|array|The recipients option takes an array of email addresses of which each email address will be emailed with details of how to access the note and the included hint message if set.|
+
+###Example
+```ruby
+note            = Noteshred::Note.new
+note.recipients = ['user1@company.com','user2@company.com']
+note.hint       = 'The same password we use for server-x'
+```
 
 ## Pushing Encrypted Notes
 Pushing a note is much like creating a note except that the encryption is performed locally from the gem and the encrypted contents are simply pushed to the server to be stored.
 This is an additional measure of security for those that are concerned about wire tapping or man in the middle attacks.
 
 ```ruby
-note = Noteshred::Note.new
+note          = Noteshred::Note.new
 note.title    = 'Super Secret Note'
 note.content  = 'Hey there, here is the info'
 note.password = 'password098'
@@ -67,7 +74,7 @@ note.encrypt
 ```
 
 calling **.encrypt** on the note will clear any sensitive content and populate the encrypted content fields with IV and salt.  
-To push the note to the server, simply call push on the note.
+To push the note to the server, simply call **.push** on the note.
 
 ```ruby
 note.push
@@ -98,7 +105,7 @@ Requests let you receive information from someone without the need for them to h
 This person will be able to open a password protected link and enter some information to be encrypted which is then sent back to you in the form of a regular note, after which you will see it appear in your note list and can access using the password you originally defined. [Read More About Requests Here](https://www.noteshred.com/blog/information-request)
 
 ```ruby
-request = Noteshred::Request.new
+request                 = Noteshred::Request.new
 request.recipient_email = 'john@company.com'
 request.password        = 'xyzabc123#%'
 request.message         = 'Please send me the credentials for server-x'
