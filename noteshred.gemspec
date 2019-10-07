@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 10.0', '>= 10.0.0'
   spec.add_development_dependency 'rspec', '~> 3.0', '>= 3.0.0'
 
-  spec.add_dependency 'rest-client', '~> 1.5', '>= 1.5.0'
+  spec.add_dependency 'rest-client', '~> 1.7.3', '>= 1.7.3'
   spec.add_dependency 'bcrypt', '~> 3.1', '>= 3.1.0'
 
   spec.required_ruby_version = '>= 1.9.3'
